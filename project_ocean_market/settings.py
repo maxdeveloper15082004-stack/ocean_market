@@ -52,12 +52,8 @@ WSGI_APPLICATION = "project_ocean_market.wsgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('ocean_market_db'),
-        'USER': os.environ.get('root'),
-        'PASSWORD': os.environ.get('sqlpassword'),
-        'HOST': os.environ.get('localhost'),
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
