@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Ocean Market</title>
+    <title>Sign Up - Ocean Market</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -28,11 +28,11 @@
     <main class="login-container">
       <div class="login-card">
         <div class="login-header">
-          <h2>Welcome Back</h2>
-          <p>Sign in to access fresh seafood daily</p>
+          <h2>Create Account</h2>
+          <p>Sign up to access fresh seafood daily</p>
         </div>
 
-        <form class="login-form" action="#" method="POST" id="loginForm">
+        <form class="login-form" action="#" method="POST" id="signupForm">
           {% csrf_token %}
           <div class="form-group">
             <label for="name">Full Name</label>
@@ -80,17 +80,80 @@
             </div>
           </div>
 
+          <div class="form-group" id="send-otp-section">
+            <button
+              type="button"
+              class="send-otp-btn"
+              id="sendOtpBtn"
+              style="margin-top: 10px"
+            >
+              Send OTP
+            </button>
+          </div>
+
+          <div
+            class="form-group otp-group"
+            id="otp-input-section"
+            style="display: none"
+          >
+            <label for="otp">Enter OTP</label>
+            <div class="input-wrapper">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"
+                />
+              </svg>
+              <input
+                type="text"
+                id="otp"
+                name="otp"
+                placeholder="Enter 6-digit OTP"
+                maxlength="6"
+                pattern="\d{6}"
+              />
+            </div>
+
+            <button
+              type="button"
+              class="send-otp-btn"
+              id="resendOtpBtn"
+              style="display: none; margin-top: 10px"
+            >
+              Resend OTP
+            </button>
+
+            <div
+              id="otp-message"
+              style="margin-top: 10px; font-size: 0.85rem; color: red"
+            ></div>
+            <div
+              id="otp-timer"
+              style="
+                margin-top: 5px;
+                font-size: 0.85rem;
+                color: #666;
+                display: none;
+              "
+            >
+              OTP expires in <span id="timer-count">05:00</span>
+            </div>
+          </div>
           <button type="submit" class="submit-btn" id="submitBtn">
-            <span>Login Securely</span>
+            <span>Create Account</span>
           </button>
 
           <div class="auth-switch" style="text-align: center; margin-top: 20px">
             <p style="color: #666; font-size: 0.95rem">
-              Don't have an account?
+              Already have an account?
               <a
-                href="{% url 'signup' %}"
+                href="{% url 'login' %}"
                 style="color: #00addc; text-decoration: none; font-weight: 600"
-                >Sign up</a
+                >Login</a
               >
             </p>
           </div>
@@ -98,6 +161,6 @@
       </div>
     </main>
 
-    <script src="{% static 'js/login.js' %}"></script>
+    <script src="{% static 'js/signup.js' %}"></script>
   </body>
 </html>

@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const sendOtpBtn = document.getElementById('sendOtpBtn');
-    const otpGroup = document.querySelector('.otp-group');
     const loginForm = document.getElementById('loginForm');
     
     const formGroups = document.querySelectorAll('.form-group');
@@ -25,33 +23,55 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 
-    if(sendOtpBtn) {
-        sendOtpBtn.addEventListener('click', () => {
-            const phoneInput = document.getElementById('phone').value;
-            const nameInput = document.getElementById('name').value;
-            
-            if(!nameInput.trim() || !phoneInput.trim()) {
-                alert("Please enter full name and phone number to receive OTP.");
-                return;
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nameInput = document.getElementById('name').value;
+        const phoneInput = document.getElementById('phone').value;
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.querySelector('span').innerText;
+        
+        // We'll optionally show an error message if added to the DOM
+        let errorMessage = document.getElementById('login-error');
+        if (!errorMessage) {
+            errorMessage = document.createElement('div');
+            errorMessage.id = 'login-error';
+            errorMessage.style.color = 'red';
+            errorMessage.style.marginTop = '10px';
+            errorMessage.style.textAlign = 'center';
+            loginForm.insertBefore(errorMessage, submitBtn);
+        }
+        
+        errorMessage.textContent = "";
+        submitBtn.querySelector('span').innerText = "Logging in...";
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch('/api/login/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: nameInput, phone: phoneInput })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                errorMessage.style.color = "green";
+                errorMessage.textContent = data.message;
+                setTimeout(() => {
+                    window.location.href = data.redirect_url || "/";
+                }, 500);
+            } else {
+                submitBtn.querySelector('span').innerText = originalText;
+                submitBtn.disabled = false;
+                errorMessage.style.color = "red";
+                errorMessage.textContent = data.message;
             }
-
-            sendOtpBtn.innerText = "Sending...";
-            sendOtpBtn.disabled = true;
-            
-            setTimeout(() => {
-                otpGroup.classList.add('otp-sent');
-                const submitBtn = document.getElementById('submitBtn');
-                submitBtn.querySelector('span').innerText = 'Verify & Login';
-                
-                document.getElementById('otp').focus();
-            }, 800);
-        });
-    }
-
-    loginForm.addEventListener('submit', (e) => {
-        if (!otpGroup.classList.contains('otp-sent')) {
-            e.preventDefault();
-            alert("Please send and enter OTP first.");
+        } catch (error) {
+            submitBtn.querySelector('span').innerText = originalText;
+            submitBtn.disabled = false;
+            errorMessage.style.color = "red";
+            errorMessage.textContent = "Network error. Please try again.";
         }
     });
 });

@@ -157,16 +157,9 @@
 }
 
 .otp-group .input-wrapper {
-  display: none; /* Hidden strictly by JS if needed, or we show it always to have simple login */
-}
-.otp-group.otp-sent .input-wrapper {
-  display: flex;
-  animation: slideDown 0.3s ease forwards;
+  display: flex; 
 }
 
-.otp-group.otp-sent .send-otp-btn {
-  display: none;
-}
 
 @keyframes slideDown {
   from {
