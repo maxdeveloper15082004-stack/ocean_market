@@ -193,6 +193,19 @@ function syncHeadDocument(newDoc) {
         }
     });
 
+    const currentScripts = Array.from(document.querySelectorAll('script'))
+                                .map(script => script.getAttribute("src"));
+                                
+    const newScripts = Array.from(newDoc.querySelectorAll('script'));
+    
+    newScripts.forEach(script => {
+        const src = script.getAttribute("src");
+        if (src && !currentScripts.includes(src)) {
+            const newScript = document.createElement("script");
+            newScript.src = src;
+            document.body.appendChild(newScript);
+        }
+    });
 }
 
 function executePageScripts(url) {
@@ -207,5 +220,11 @@ function executePageScripts(url) {
                 card.style.transform = "translateY(0)";
             }, 100 * (index + 1));
         });
+    }
+
+    if (url.includes("/address/")) {
+        if (typeof initAddressLogic === "function") {
+            initAddressLogic();
+        }
     }
 }

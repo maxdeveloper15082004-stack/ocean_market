@@ -65,9 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
     async function handleSendOTP() {
         const phoneInput = document.getElementById('phone').value;
         const nameInput = document.getElementById('name').value;
+        const emailInput = document.getElementById('email').value;
+        const passwordInput = document.getElementById('password').value;
         
-        if(!nameInput.trim() || !phoneInput.trim()) {
-            alert("Please enter full name and phone number (e.g., +918888888888).");
+        if(!nameInput.trim() || !phoneInput.trim() || !emailInput.trim() || !passwordInput.trim()) {
+            alert("Please fill in all details (Name, Phone, Email, Password).");
             return;
         }
 
@@ -136,6 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const phoneInput = document.getElementById('phone').value;
             const otpInput = document.getElementById('otp').value;
             const nameInput = document.getElementById('name').value;
+            const emailInput = document.getElementById('email').value;
+            const passwordInput = document.getElementById('password').value;
 
             if (otpInput.length !== 6) {
                 otpMessage.style.color = "red";
@@ -152,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const response = await fetch('/api/verify-otp/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone: phoneInput, otp: otpInput, name: nameInput })
+                    body: JSON.stringify({ phone: phoneInput, otp: otpInput, name: nameInput, email: emailInput, password: passwordInput })
                 });
 
                 const data = await response.json();

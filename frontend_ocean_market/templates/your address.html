@@ -1,0 +1,331 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Address - Ocean Market</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/all.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/your address.css' %}" />
+  </head>
+  <body class="page-transitioning">
+    <header class="navbar">
+      <a href="/" class="logo-container">
+        <span class="logo-icon">&#128031;</span>
+        <span class="logo-text">Ocean Market</span>
+      </a>
+      {% if request.session.customer_name %}
+      <div class="user-dropdown">
+        <button
+          class="login-btn user-btn"
+          onclick="toggleUserDropdown()"
+          style="
+            cursor: pointer;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+          "
+        >
+          <span class="login-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+            </svg>
+          </span>
+          <span class="login-text">{{ request.session.customer_name }}</span>
+        </button>
+        <div
+          class="dropdown-content"
+          id="userDropdown"
+          style="
+            display: none;
+            position: absolute;
+            right: 1.5rem;
+            top: 70px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 100;
+            min-width: 140px;
+          "
+        >
+          <a
+            href="{% url 'logout' %}"
+            style="
+              display: block;
+              padding: 12px 16px;
+              color: #ff4d4f;
+              text-decoration: none;
+              font-family: &quot;Inter&quot;, sans-serif;
+              font-weight: 600;
+              text-align: center;
+            "
+            >Logout</a
+          >
+        </div>
+      </div>
+      <script>
+        function toggleUserDropdown() {
+          var dropdown = document.getElementById("userDropdown");
+          if (
+            dropdown.style.display === "none" ||
+            dropdown.style.display === ""
+          ) {
+            dropdown.style.display = "block";
+          } else {
+            dropdown.style.display = "none";
+          }
+        }
+        window.onclick = function (event) {
+          if (!event.target.closest(".user-dropdown")) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.style.display === "block") {
+                openDropdown.style.display = "none";
+              }
+            }
+          }
+        };
+      </script>
+      {% else %}
+      <a href="/login/" class="login-btn">
+        <span class="login-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+        </span>
+        <span class="login-text">Login</span>
+      </a>
+      {% endif %}
+    </header>
+
+    <main class="hero">
+      <div class="hero-content">
+        <h1>
+          Fresh,<br />
+          Seafood,<br />
+          Delivered Daily
+        </h1>
+        <p>
+          Premium quality fish and seafood,<br />
+          from the ocean to your door
+        </p>
+      </div>
+    </main>
+
+    <div class="bottom-nav">
+      <div class="nav-scroll-container">
+        <button class="nav-pill">All</button>
+        <button class="nav-pill">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            />
+          </svg>
+          Wishlist
+        </button>
+        <button class="nav-pill">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"
+            />
+          </svg>
+          Cart
+        </button>
+        <button class="nav-pill">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"
+            />
+          </svg>
+          Your Orders
+        </button>
+        <button class="nav-pill active">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+            />
+          </svg>
+          Your Address
+        </button>
+        <button class="nav-pill">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+            />
+          </svg>
+          About Us
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="page-content"
+      data-logged-in="{% if request.session.customer_name %}true{% else %}false{% endif %}"
+    >
+      <div class="address-container">
+        <div class="address-header">
+          <h2>Your Addresses</h2>
+          <p>Manage your delivery addresses</p>
+        </div>
+
+        {% if address %}
+        <div class="saved-addresses" id="savedAddressView">
+          <div class="address-card">
+            <div class="address-card-header">
+              <h3 class="address-name">{{ address.full_name }}</h3>
+              <span class="address-badge">{{ address.address_type }}</span>
+            </div>
+            <p class="address-phone">{{ address.phone_number }}</p>
+            <p class="address-full">{{ address.full_address }}</p>
+            <p class="address-pin">PIN: {{ address.pincode }}</p>
+          </div>
+          <div class="address-actions" style="margin-top: 20px">
+            <button class="add-address-btn" id="editAddressBtn">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="currentColor"
+              >
+                <path
+                  d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                />
+              </svg>
+              Edit Address
+            </button>
+          </div>
+        </div>
+        {% else %}
+        <div class="saved-addresses" id="emptyAddressView">
+          <div class="empty-state">
+            <p>No addresses found. Please add an address.</p>
+          </div>
+          <div class="address-actions" style="margin-top: 20px">
+            <button class="add-address-btn" id="addNewAddressBtn">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="currentColor"
+              >
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+              Add Address
+            </button>
+          </div>
+        </div>
+        {% endif %}
+
+        <div
+          class="address-form-container"
+          id="addressFormContainer"
+          style="display: none"
+        >
+          <form id="addressForm" class="address-form">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input
+                type="text"
+                id="id_full_name"
+                value="{{ address.full_name|default:'' }}"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                id="id_phone_number"
+                value="{{ address.phone_number|default:'' }}"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Address Type</label>
+              <select id="id_address_type">
+                <option
+                  value="Home"
+                  {%
+                  if
+                  address.address_type=""
+                  ="Home"
+                  %}selected{%
+                  endif
+                  %}
+                >
+                  Home
+                </option>
+                <option
+                  value="Office"
+                  {%
+                  if
+                  address.address_type=""
+                  ="Office"
+                  %}selected{%
+                  endif
+                  %}
+                >
+                  Office
+                </option>
+                <option
+                  value="Other"
+                  {%
+                  if
+                  address.address_type=""
+                  ="Other"
+                  %}selected{%
+                  endif
+                  %}
+                >
+                  Other
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Full Address</label>
+              <textarea id="id_full_address" rows="3" required>
+{{ address.full_address|default:'' }}</textarea
+              >
+            </div>
+            <div class="form-group">
+              <label>Pincode</label>
+              <input
+                type="text"
+                id="id_pincode"
+                value="{{ address.pincode|default:'' }}"
+                required
+              />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="save-btn" id="saveAddressBtn">
+                Save
+              </button>
+              <button type="button" class="cancel-btn" id="cancelAddressBtn">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End Page Content Wrapper -->
+
+    <script src="{% static 'js/home.js' %}"></script>
+    <script src="{% static 'js/your address.js' %}"></script>
+  </body>
+</html>

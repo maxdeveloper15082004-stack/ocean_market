@@ -47,10 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
 
         try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nextUrl = urlParams.get('next') || "/";
+            
             const response = await fetch('/api/login/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: nameInput, phone: phoneInput })
+                body: JSON.stringify({ name: nameInput, phone: phoneInput, next: nextUrl })
             });
 
             const data = await response.json();
